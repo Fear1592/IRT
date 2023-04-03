@@ -52,31 +52,26 @@ class ChoicesListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProductDetailSerializer(WritableNestedModelSerializer):
-    choices = ChoicesListSerializer(many=True)
+class ProductDetailSerializer(serializers.ModelSerializer):
+    choices = ChoicesListSerializer(many=True, read_only=True)
     images = ImagesListSerializer(many=True, read_only=True)
-    videos = VideosListSerializer(many=True)
-    category = CategoryListSerializer()
+    # videos = VideosListSerializer(many=True, read_only=True)
+    # category = CategoryListSerializer()
 
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at', 'price',
-                  'count'
+                  'category', 'created_at', 'price'
                   ]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
-    choices = ChoicesListSerializer(many=True)
-    images = ImagesListSerializer(many=True)
-    videos = VideosListSerializer(many=True)
-    category = CategoryListSerializer()
+
 
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at', 'price',
-                  'count'
+                  'category', 'created_at', 'price'
                   ]
