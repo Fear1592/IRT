@@ -21,9 +21,8 @@ from django.conf import settings
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('api/v1/', include('product.urls')),
+                  path('api/v1/shop/', include('shop.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# path('api/v1/product/', include('product.urls')),
-#                   path('api/v1/shop/', include('shop.urls')),
-#                   path('api/v1/userProfile/', include('userProfile.urls')),
-#                   path('api/v1/adminPanel/', include('adminPanel.urls')),
+#path('api/v1/product/', include('product.urls')),
+#path('api/v1/userProfile/', include('userProfile.urls')),

@@ -33,7 +33,6 @@ class Product(models.Model):
                                  on_delete=models.CASCADE)
     is_published = models.BooleanField(default=False, verbose_name='Опбуликовано')
     created_at = models.DateTimeField(auto_now=True, verbose_name='Дата публикации')
-    price = models.PositiveIntegerField(verbose_name='Цена товара')
 
     class Meta:
         ordering = ['-created_at']
@@ -76,6 +75,7 @@ class Choices(models.Model):
     in_stock = models.BooleanField(default=True, verbose_name='В наличии')
     count = models.PositiveIntegerField(default=0, verbose_name='Колличество товара')
     image = models.ImageField(upload_to='choices/', verbose_name='Изображение категории')
+    price = models.PositiveIntegerField(verbose_name='Цена товара')
 
     class Meta:
         ordering = ['id']
