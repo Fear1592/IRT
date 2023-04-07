@@ -55,23 +55,28 @@ class ChoicesListSerializer(serializers.ModelSerializer):
 class ProductDetailSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
     images = ImagesListSerializer(many=True, read_only=True)
-    # videos = VideosListSerializer(many=True, read_only=True)
-    # category = CategoryListSerializer()
+    videos = VideosListSerializer(many=True, read_only=True)
+    category = CategoryListSerializer(read_only=True)
+
 
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at', 'price'
+                  'category', 'created_at'
                   ]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
+    choices = ChoicesListSerializer(many=True, read_only=True)
+    images = ImagesListSerializer(many=True, read_only=True)
+    videos = VideosListSerializer(many=True, read_only=True)
+    category = CategoryListSerializer(read_only=True)
 
 
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at', 'price'
+                  'category', 'created_at'
                   ]

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='order')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     paid = models.BooleanField(default=False, verbose_name='Статус оплаты')
@@ -15,15 +15,12 @@ class Order(models.Model):
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
 
-
     def get_total_price(self):
         total = sum(item.get_cost() for item in self.order.all())
         return total
 
     def __str__(self):
         return f'{self.get_total_price()}'
-
-
 
 
 class OrderItem(models.Model):
@@ -36,13 +33,25 @@ class OrderItem(models.Model):
         verbose_name = "Товар в заказ"
         verbose_name_plural = "Товары в заказах"
 
-
-
-
     def get_cost(self):
         return self.choices.price * self.quantity
 
-
-
     def __str__(self):
         return str(self.get_cost())
+
+
+class Adress(models.Model):
+    country = models.CharField('Страна', max_length=250)
+    region = models.CharField('Край/Область/Регион', max_length=250)
+    city = models.CharField('Город/Населённый пункт', max_length=250)
+    street = models.CharField('Улица/Дом/Квартира', max_length=250)
+    phone = models.CharField('Телефон', max_length=50, default='')
+    postal_code = models.CharField('Почтовый индекс', max_length=20)
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = "Адрес доставки"
+        verbose_name_plural = "Адреса доставки"
+
+    def __str__(self):
+        return self.country

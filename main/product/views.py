@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework import filters
 from .serializers import ProductDetailSerializer, ProductListSerializer, \
     ChoicesDetailSerializer, ChoicesListSerializer, ImagesDetailSerializer, \
     ImagesListSerializer, VideosDetailSerializer, VideosListSerializer, \
@@ -70,6 +71,8 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductListSerializer
     queryset = Product.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['$name', ]
 
     # def get_queryset(self):
     #     user = self.request.user

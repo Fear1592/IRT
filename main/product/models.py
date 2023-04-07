@@ -72,6 +72,7 @@ class Videos(models.Model):
 class Choices(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт', related_name='choices')
     name = models.CharField(max_length=150, verbose_name='Имя типа товара цвет/вкус')
+    article_number = models.CharField(max_length=50, verbose_name='Артикул')
     in_stock = models.BooleanField(default=True, verbose_name='В наличии')
     count = models.PositiveIntegerField(default=0, verbose_name='Колличество товара')
     image = models.ImageField(upload_to='choices/', verbose_name='Изображение категории')

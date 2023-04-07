@@ -1,9 +1,16 @@
 from rest_framework import generics
 
 from .serializers import OrderListSerializer, OrderDetailSerializer, \
-    OrderItemDetailSerializer, OrderItemListSerializer
-from .models import Order, OrderItem
+    OrderItemDetailSerializer, OrderItemListSerializer, AdressDetailSerializer, \
+    AdressListSerializer, ChoicesUpdateSerializer
+from .models import Order, OrderItem, Adress
+from product.models import Choices
 
+
+
+class UpdateChoicesDetailView(generics.UpdateAPIView):
+    serializer_class = ChoicesUpdateSerializer
+    queryset = Choices.objects.all()
 
 class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderDetailSerializer
@@ -31,3 +38,17 @@ class OrderItemListView(generics.ListAPIView):
 class OrderItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderItemDetailSerializer
     queryset = OrderItem.objects.all()
+
+
+class AdressCreateView(generics.CreateAPIView):
+    serializer_class = AdressDetailSerializer
+
+
+class AdressListView(generics.ListAPIView):
+    serializer_class = AdressListSerializer
+    queryset = Adress.objects.all()
+
+
+class AdressDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AdressDetailSerializer
+    queryset = Adress.objects.all()

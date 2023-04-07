@@ -1,6 +1,25 @@
 from rest_framework import serializers
 from product.serializers import ChoicesListSerializer
-from .models import Order, OrderItem
+from .models import Order, OrderItem, Adress
+from product.models import Choices
+
+
+
+class ChoicesUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choices
+        fields = ['count']
+
+class AdressDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adress
+        fields = ['id', 'country', 'region', 'city', 'street', 'phone', 'postal_code']
+
+
+class AdressListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adress
+        fields = ['id', 'country', 'region', 'city', 'street', 'phone', 'postal_code']
 
 
 class OrderItemDetailSerializer(serializers.ModelSerializer):
