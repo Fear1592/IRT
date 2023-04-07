@@ -54,9 +54,8 @@ class ChoicesListSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
-    images = ImagesListSerializer(many=True, read_only=True)
+    images = ImagesListSerializer(many=True,read_only=True)
     videos = VideosListSerializer(many=True, read_only=True)
-    category = CategoryListSerializer(read_only=True)
 
 
     class Meta:
@@ -71,7 +70,6 @@ class ProductListSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
     images = ImagesListSerializer(many=True, read_only=True)
     videos = VideosListSerializer(many=True, read_only=True)
-    category = CategoryListSerializer(read_only=True)
 
 
     class Meta:
