@@ -1,5 +1,8 @@
 from rest_framework import generics
+from rest_framework import serializers
 from rest_framework import filters
+from rest_framework.response import Response
+from rest_framework import status
 from .serializers import ProductDetailSerializer, ProductListSerializer, \
     ChoicesDetailSerializer, ChoicesListSerializer, ImagesDetailSerializer, \
     ImagesListSerializer, VideosDetailSerializer, VideosListSerializer, \
@@ -52,6 +55,17 @@ class ImagesDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ChoicesCreateView(generics.CreateAPIView):
     serializer_class = ChoicesDetailSerializer
+    queryset = Choices.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        data = request.data
+        if int(data.get('count')) > 0:
+            response.data['in_stock'] = True
+        else:
+            response.data['in_stock'] = False
+        return response
 
 
 class ChoicesListView(generics.ListAPIView):
@@ -63,12 +77,37 @@ class ChoicesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ChoicesDetailSerializer
     queryset = Choices.objects.all()
 
+    def put(self, request, *args, **kwargs):
+        data = request.data
+        choice = self.get_object()
+        product = Product.objects.get(id=int(data.get('product', )))
+        choice.product = product
+        choice.name = data.get('name', )
+        choice.article_number = data.get('article_number', )
+        choice.in_stock = data.get('in_stock', )
+        choice.count = data.get('count', )
+        choice.price = data.get('price', )
+        if data.get('image') != '':
+            choice.image = data.get('image')
+        if int(data.get('count', )) > 0:
+            choice.in_stock = True
+        else:
+            choice.in_stock = False
+        choice.save()
+        serializer = self.serializer_class(choice)
+        print(data.get('image'))
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductDetailSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class ProductListView(generics.ListAPIView):
+    user = serializers.PrimaryKeyRelatedField(read_only=True,)
     serializer_class = ProductListSerializer
     queryset = Product.objects.all()
     filter_backends = [filters.SearchFilter]

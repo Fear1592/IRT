@@ -1,11 +1,30 @@
 from django.db import models
 
 from product.models import Choices
-from django.contrib.auth.models import User
+from django.conf import settings
 
+
+
+class Adress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='adress_user')
+    country = models.CharField('Страна', max_length=250)
+    region = models.CharField('Край/Область/Регион', max_length=250)
+    city = models.CharField('Город/Населённый пункт', max_length=250)
+    street = models.CharField('Улица/Дом/Квартира', max_length=250)
+    phone = models.CharField('Телефон', max_length=50, default='')
+    postal_code = models.CharField('Почтовый индекс', max_length=20)
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = "Адрес доставки"
+        verbose_name_plural = "Адреса доставки"
+
+    def __str__(self):
+        return self.country
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    adress = models.ForeignKey(Adress, on_delete=models.CASCADE, related_name='adress',verbose_name='Адрес доставки')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     paid = models.BooleanField(default=False, verbose_name='Статус оплаты')
@@ -40,18 +59,4 @@ class OrderItem(models.Model):
         return str(self.get_cost())
 
 
-class Adress(models.Model):
-    country = models.CharField('Страна', max_length=250)
-    region = models.CharField('Край/Область/Регион', max_length=250)
-    city = models.CharField('Город/Населённый пункт', max_length=250)
-    street = models.CharField('Улица/Дом/Квартира', max_length=250)
-    phone = models.CharField('Телефон', max_length=50, default='')
-    postal_code = models.CharField('Почтовый индекс', max_length=20)
 
-    class Meta:
-        ordering = ['-id']
-        verbose_name = "Адрес доставки"
-        verbose_name_plural = "Адреса доставки"
-
-    def __str__(self):
-        return self.country

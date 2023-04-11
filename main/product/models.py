@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец поста')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Владелец поста')
     name = models.CharField(max_length=155, verbose_name='Название товара')
     choice_cat = models.CharField(max_length=155, verbose_name='Название подкатегорий',
                                   blank=True, null=True)
@@ -78,8 +78,9 @@ class Choices(models.Model):
     image = models.ImageField(upload_to='choices/', verbose_name='Изображение категории')
     price = models.PositiveIntegerField(verbose_name='Цена товара')
 
+
     class Meta:
-        ordering = ['id']
+        ordering = ['-id']
         verbose_name = "Разновидность товара"
         verbose_name_plural = "Разновидности товаров"
 

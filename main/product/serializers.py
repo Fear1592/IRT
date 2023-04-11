@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from drf_writable_nested import WritableNestedModelSerializer
-
 from .models import Product, Choices, Images, Videos, Category
 
 
@@ -43,7 +41,10 @@ class ImagesListSerializer(serializers.ModelSerializer):
 class ChoicesDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choices
-        fields = '__all__'
+        fields = ['id', 'product', 'name', 'article_number', 'in_stock', 'count', 'image', 'price']
+
+    def create(self, validated_data):
+        return Choices.objects.create(**validated_data)
 
 
 class ChoicesListSerializer(serializers.ModelSerializer):
@@ -54,9 +55,9 @@ class ChoicesListSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
-    images = ImagesListSerializer(many=True,read_only=True)
+    images = ImagesListSerializer(many=True, read_only=True)
     videos = VideosListSerializer(many=True, read_only=True)
-
+    user = serializers.PrimaryKeyRelatedField(read_only=True,)
 
     class Meta:
         model = Product
@@ -66,10 +67,12 @@ class ProductDetailSerializer(serializers.ModelSerializer):
                   ]
 
 
+
 class ProductListSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
     images = ImagesListSerializer(many=True, read_only=True)
     videos = VideosListSerializer(many=True, read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True, )
 
 
     class Meta:

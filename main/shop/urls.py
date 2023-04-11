@@ -11,6 +11,5 @@ urlpatterns = [
     path('adress/create/', AdressCreateView.as_view()),
     path('adress/all/', AdressListView.as_view()),
     path('adress/detail/<int:pk>/', AdressDetailView.as_view()),
-    path('choices/update/<int:pk>/', UpdateChoicesDetailView.as_view()),
 
 ]
