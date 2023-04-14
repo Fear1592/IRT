@@ -18,4 +18,3 @@ urlpatterns = [
     path('category/all/', CategoryListView.as_view()),
     path('category/detail/<int:pk>/', CategoryDetailView.as_view()),
 ]
-###
