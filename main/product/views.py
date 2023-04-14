@@ -30,6 +30,17 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdminOrReadOnly,)
     queryset = Category.objects.all()
 
+    def put(self, request, *args, **kwargs):
+        data = request.data
+        category = self.get_object()
+        category.name = data.get('name', )
+        if data.get('image') != '':
+            category.image = data.get('image')
+        category.save()
+        serializer = self.serializer_class(category)
+        print(data.get('image'))
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class VideosCreateView(generics.CreateAPIView):
     serializer_class = VideosDetailSerializer
@@ -45,6 +56,18 @@ class VideosListView(generics.ListAPIView):
 class VideosDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VideosDetailSerializer
     queryset = Videos.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        data = request.data
+        video = self.get_object()
+        product = Product.objects.get(id=int(data.get('product', )))
+        video.product = product
+        if data.get('video') != '':
+            video.video = data.get('video')
+        video.save()
+        serializer = self.serializer_class(video)
+        print(data.get('video'))
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ImagesCreateView(generics.CreateAPIView):
@@ -62,6 +85,18 @@ class ImagesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ImagesDetailSerializer
     queryset = Images.objects.all()
     permission_classes = (IsAdminOrReadOnly,)
+
+    def put(self, request, *args, **kwargs):
+        data = request.data
+        image = self.get_object()
+        product = Product.objects.get(id=int(data.get('product', )))
+        image.product = product
+        if data.get('image') != '':
+            image.image = data.get('image')
+        image.save()
+        serializer = self.serializer_class(image)
+        print(data.get('video'))
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ChoicesCreateView(generics.CreateAPIView):

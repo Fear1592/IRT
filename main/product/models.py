@@ -23,12 +23,6 @@ class Product(models.Model):
                                   blank=True, null=True)
     specifications = models.TextField( verbose_name='Характеристики', blank=True, null=True)
     equipment = models.TextField( verbose_name='Комплектация', blank=True, null=True)
-    # images = models.ManyToManyField(Images, blank=True,
-    #                                 verbose_name='Все изображения товара',
-    #                                 related_name="images")
-    # videos = models.ManyToManyField(Videos, blank=True,
-    #                                 verbose_name='Все видео товара',
-    #                                 related_name="videos")
     category = models.ForeignKey(Category,
                                  verbose_name='Категория товара',
                                  on_delete=models.CASCADE)

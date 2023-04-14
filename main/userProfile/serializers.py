@@ -83,7 +83,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
-            'is_staff': {'required': True},
         }
 
     def validate_email(self, value):
@@ -106,7 +105,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
-        instance.is_staff = validated_data['is_staff']
         instance.email = validated_data['email']
         instance.username = validated_data['username']
 
