@@ -41,7 +41,8 @@ class ImagesListSerializer(serializers.ModelSerializer):
 class ChoicesDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choices
-        fields = ['id', 'product', 'name', 'article_number', 'in_stock', 'count', 'image', 'price']
+        fields = ['id', 'product', 'name', 'article_number',
+                  'in_stock', 'count', 'image', 'price']
 
     def create(self, validated_data):
         return Choices.objects.create(**validated_data)

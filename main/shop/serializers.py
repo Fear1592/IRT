@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.serializers import PrimaryKeyRelatedField
 from product.serializers import ChoicesListSerializer
 from .models import Order, OrderItem, Adress
 

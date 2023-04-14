@@ -1,5 +1,6 @@
 from django.db import models
 
+
 from product.models import Choices
 from django.conf import settings
 
@@ -26,7 +27,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     adress = models.ForeignKey(Adress, on_delete=models.CASCADE, related_name='adress',verbose_name='Адрес доставки')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    updated = models.DateTimeField(auto_now_add=True, verbose_name='Дата обновления')
     paid = models.BooleanField(default=False, verbose_name='Статус оплаты')
 
     class Meta:

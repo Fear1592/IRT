@@ -1,8 +1,11 @@
 from rest_framework import generics
 from rest_framework import serializers
 from rest_framework import filters
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+
+from .permissions import IsAdminOrReadOnly
 from .serializers import ProductDetailSerializer, ProductListSerializer, \
     ChoicesDetailSerializer, ChoicesListSerializer, ImagesDetailSerializer, \
     ImagesListSerializer, VideosDetailSerializer, VideosListSerializer, \
@@ -13,24 +16,29 @@ from .models import Product, Choices, Images, Videos, Category
 
 class CategoryCreateView(generics.CreateAPIView):
     serializer_class = CategoryDetailSerializer
+    permission_classes = (IsAdminUser,)
 
 
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategoryListSerializer
+    permission_classes = (AllowAny,)
     queryset = Category.objects.all()
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategoryDetailSerializer
+    permission_classes = (IsAdminOrReadOnly,)
     queryset = Category.objects.all()
 
 
 class VideosCreateView(generics.CreateAPIView):
     serializer_class = VideosDetailSerializer
+    permission_classes = (IsAdminUser,)
 
 
 class VideosListView(generics.ListAPIView):
     serializer_class = VideosListSerializer
+    permission_classes = (AllowAny,)
     queryset = Videos.objects.all()
 
 
@@ -41,20 +49,24 @@ class VideosDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ImagesCreateView(generics.CreateAPIView):
     serializer_class = ImagesDetailSerializer
+    permission_classes = (IsAdminUser,)
 
 
 class ImagesListView(generics.ListAPIView):
     serializer_class = ImagesListSerializer
+    permission_classes = (AllowAny,)
     queryset = Images.objects.all()
 
 
 class ImagesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ImagesDetailSerializer
     queryset = Images.objects.all()
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 class ChoicesCreateView(generics.CreateAPIView):
     serializer_class = ChoicesDetailSerializer
+    permission_classes = (IsAdminUser,)
     queryset = Choices.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -71,11 +83,13 @@ class ChoicesCreateView(generics.CreateAPIView):
 class ChoicesListView(generics.ListAPIView):
     serializer_class = ChoicesListSerializer
     queryset = Choices.objects.all()
+    permission_classes = (AllowAny,)
 
 
 class ChoicesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ChoicesDetailSerializer
     queryset = Choices.objects.all()
+    permission_classes = (IsAdminOrReadOnly,)
 
     def put(self, request, *args, **kwargs):
         data = request.data
@@ -101,6 +115,7 @@ class ChoicesDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductDetailSerializer
+    permission_classes = (IsAdminUser,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -110,6 +125,7 @@ class ProductListView(generics.ListAPIView):
     user = serializers.PrimaryKeyRelatedField(read_only=True,)
     serializer_class = ProductListSerializer
     queryset = Product.objects.all()
+    permission_classes = (AllowAny, )
     filter_backends = [filters.SearchFilter]
     search_fields = ['$name', ]
 
@@ -121,6 +137,7 @@ class ProductListView(generics.ListAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductDetailSerializer
     queryset = Product.objects.all()
+    permission_classes = (IsAdminOrReadOnly,)
 
     # def get_queryset(self):
     #     user = self.request.user

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название категории')
     image = models.ImageField(upload_to='category/', verbose_name='Изображение категории')
@@ -20,8 +21,8 @@ class Product(models.Model):
     name = models.CharField(max_length=155, verbose_name='Название товара')
     choice_cat = models.CharField(max_length=155, verbose_name='Название подкатегорий',
                                   blank=True, null=True)
-    specifications = models.TextField(max_length=555, verbose_name='Характеристики', blank=True, null=True)
-    equipment = models.TextField(max_length=555, verbose_name='Комплектация', blank=True, null=True)
+    specifications = models.TextField( verbose_name='Характеристики', blank=True, null=True)
+    equipment = models.TextField( verbose_name='Комплектация', blank=True, null=True)
     # images = models.ManyToManyField(Images, blank=True,
     #                                 verbose_name='Все изображения товара',
     #                                 related_name="images")

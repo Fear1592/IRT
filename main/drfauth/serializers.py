@@ -1,6 +1,6 @@
-from userProfile.models import UserProfile
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
+from userProfile.models import UserProfile
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
