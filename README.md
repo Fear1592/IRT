@@ -19,3 +19,26 @@
 Приложение drfauth:
 
 Регистрации и авторизации на JWT
+
+pip install requirements.txt - установка пакетов 
+
+Войти в дерикторию приложения main 
+через терминал cd main
+после запустить сервер командой
+python manage.py runserver
+
+
+Супер Юзер
+вход по email:
+b@b.com
+пароль:
+potterlol1
+
+
+в settings.py
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:6379',
+    ДОБАВИТЬ сервер фронта так же как указано выше.
+]
