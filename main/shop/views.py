@@ -60,23 +60,17 @@ class OrderItemCreateView(generics.CreateAPIView):
 class OrderItemListView(generics.ListAPIView):
     serializer_class = OrderItemListSerializer
     permission_classes = (IsAuthenticated,)
+    queryset = OrderItem.objects.all()
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_staff:
-            return OrderItem.objects.all()
-        else:
-            return OrderItem.objects.filter(user=user)
 
 
 class OrderItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderItemDetailSerializer
     permission_classes = (IsAuthenticated,)
+    queryset = OrderItem.objects.all()
 
 
-    def get_queryset(self):
-        user = self.request.user
-        return OrderItem.objects.filter(user=user)
+
 
 
 class AdressCreateView(generics.CreateAPIView):
