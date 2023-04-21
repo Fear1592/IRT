@@ -111,3 +111,9 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('__all__')

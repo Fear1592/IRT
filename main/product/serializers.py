@@ -58,15 +58,14 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     choices = ChoicesListSerializer(many=True, read_only=True)
     images = ImagesListSerializer(many=True, read_only=True)
     videos = VideosListSerializer(many=True, read_only=True)
-    user = serializers.PrimaryKeyRelatedField(read_only=True,)
+    user = serializers.PrimaryKeyRelatedField(read_only=True, )
 
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at'
+                  'category', 'created_at', 'is_published'
                   ]
-
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -75,10 +74,9 @@ class ProductListSerializer(serializers.ModelSerializer):
     videos = VideosListSerializer(many=True, read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True, )
 
-
     class Meta:
         model = Product
         fields = ['id', 'user', 'name', 'choice_cat', 'choices',
                   'specifications', 'equipment', 'images', 'videos',
-                  'category', 'created_at'
+                  'category', 'created_at', 'is_published'
                   ]

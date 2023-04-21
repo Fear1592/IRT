@@ -95,7 +95,7 @@ class ImagesDetailView(generics.RetrieveUpdateDestroyAPIView):
             image.image = data.get('image')
         image.save()
         serializer = self.serializer_class(image)
-        print(data.get('video'))
+        print(data.get('image'))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

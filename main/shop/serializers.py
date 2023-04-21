@@ -4,7 +4,7 @@ from .models import Order, OrderItem, Adress
 
 
 class AdressDetailSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(read_only=True, )
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Adress
         fields = ['id', 'country', 'region', 'city', 'street', 'phone', 'postal_code', 'user']
